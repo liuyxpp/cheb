@@ -1,0 +1,18 @@
+syntax: glob
+build/*
+extern/*
+dist/*
+*.o
+*.a
+*.swp
+*.mat
+*.png
+*.bak
+*.out
+*.pyc
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+*.tar.gz
+done.txt
+
