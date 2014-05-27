@@ -26,7 +26,7 @@
 #ifndef cheb_boundary_h
 #define cheb_boundary_h
 
-enum class BC {DBC, NBC, RBC};
+enum class BC {DBC, NBC, RBC, PBC};
 
 /**
  * The boundary condition can be generally written as
@@ -34,8 +34,9 @@ enum class BC {DBC, NBC, RBC};
  */
 class Boundary{
 public:
-    Boundary(): bc(BC::DBC), a1(0), a2(1.0), a3(0) {}
-    Boundary(double, double, double);
+    Boundary(): bc(BC::PBC), a1(0), a2(0), a3(0) {}
+    Boundary(const Boundary &rhs): bc(rhs.bc), a1(rhs.a1), a2(rhs.a2), a3(rhs.a3) {}
+    Boundary(const double, const double, const double);
     BC kind() {return bc;}
     double alpha() {return a1;}
     double beta() {return a2;}

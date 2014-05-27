@@ -30,7 +30,8 @@ CXXFLAGS = $(BENCHMARK) $(WARN) $(ARMAFINAL) $(OPT) $(LIB_HEADERS)
 MKDIR_P = mkdir -p
 
 _OBJS = Cheb.o \
-		Boundary.o
+		Boundary.o \
+		Etdrk4.o
 
 OBJS = $(patsubst %,$(ODIR)/%,$(_OBJS))
 

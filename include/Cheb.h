@@ -29,6 +29,7 @@
 #define cheb_cheb_h
 
 #include "armadillo"
+#include "Boundary.h"
 
 const double PI=3.14159265358979323846264338327950288;
 
@@ -45,9 +46,20 @@ public:
     arma::colvec w();  // Chebyshev-Gauss-Lobatto weights
     arma::colvec c();  // Chebyshev coefficients
     arma::mat D();  // 1st order Chebyshev differential matrix
-    arma::mat D2();   // 2n order Chebyshev differential matrix
+    arma::mat D2();   // 2nd order Chebyshev differential matrix
+    arma::mat D(Boundary, Boundary);  // subject to boundary condition
+    arma::mat D2(Boundary, Boundary);  // subject to boundary condition
 private:
     int N;
+
+    arma::mat D_dbc_dbc();
+    arma::mat D_dbc_rbc(Boundary);
+    arma::mat D_rbc_dbc(Boundary);
+    arma::mat D_rbc_rbc(Boundary, Boundary);
+    arma::mat D2_dbc_dbc();
+    arma::mat D2_dbc_rbc(Boundary);
+    arma::mat D2_rbc_dbc(Boundary);
+    arma::mat D2_rbc_rbc(Boundary, Boundary);
 };
 
 #endif

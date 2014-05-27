@@ -3,11 +3,13 @@
 /**
  * Initialization of Boundary by three coefficients.
  */
-Boundary::Boundary(double k1, double k2, double k3){
-    if(k1 == 0)
+Boundary::Boundary(const double k1, const double k2, const double k3){
+    if(k1 == 0 && k2 != 0)
         bc = BC::DBC;
-    else if(k2 == 0)
+    else if(k1 != 0 && k2 == 0)
         bc = BC::NBC;
+    else if(k1 == 0 && k2 == 0)
+        bc = BC::PBC;
     else
         bc = BC::RBC;
     a1 = k1;
