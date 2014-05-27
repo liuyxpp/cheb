@@ -8,23 +8,31 @@ Quickstart
 
 1. Usage
 ^^^^^^^^
+See test codes in the tests directory.
 
-2. Download
-^^^^^^^^^^^
-
-3. Install
+2. Install
 ^^^^^^^^^^
+
+# cd cheb++
+Go to the top directory of cheb++.
 
 # make lib
 To make libcheb.a
 
-Dependency
+# cp build/lib/libcheb.a target_dir
+Copy libcheb.a to target directory (target_dir)
 
-* FFTW 3.3+
+For Mac OS x86_64:
+Add "-framework Accelerate" to CXXFLAGS in the Makefile.
+
+Dependency
+----------
+
 * Armadillo 4.300+
 
-Mac OS x86_64
-Add "-framework Accelerate" to CXXFLAGS in the Makefile
+License
+-------
+GPL v.3 or later versions.
 
 Ask for Help
 ------------
@@ -34,6 +42,6 @@ Ask for Help
 Links
 -----
 
-* `Website <http://liuyxpp.bitbucket.org>`_
+* `Website <http://www.ngpy.org>`_
 * `Development version <http://bitbucket.org/liuyxpp/cheb++/>`_
 
