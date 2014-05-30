@@ -6,5 +6,11 @@ Here you can see the full list of changes between each cheb++ release.
 Version 0.1
 -----------
 
-* First release.
+* First release: 2014-05-30.
+* Including following fuctions:
+    1. Chebyshev differential matrix
+    2. derivatives of Chebyshev expanded functions
+    3. Clenshaw-Curtis quadrature
+    4. 1D interpolation based on Chebyshev-Gauss-Lobatto grid
+    5. Boundary conditions: DBC, NBC, RBC, PBC.
 

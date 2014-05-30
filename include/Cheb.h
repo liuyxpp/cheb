@@ -2,9 +2,11 @@
  * Cheb.h/Cheb.cc
  * Created at 2014.5.23
  *
- * This file provide a set of subroutines for producing
- * Chebyshev differential matrix
- * and evaluating derivatives of Chebyshev expanded functions.
+ * This file provide a set of subroutines for evaluating
+ *  1. Chebyshev differential matrix
+ *  2. derivatives of Chebyshev expanded functions
+ *  3. Clenshaw-Curtis quadrature
+ *  4. 1D interpolation based on Chebyshev-Gauss-Lobatto grid
  *
  * Copyright (C) 2014 Yi-Xin Liu <liuyxpp@gmail.com>
  *
