@@ -15,4 +15,6 @@ dist/*
 .DS_Store
 *.tar.gz
 done.txt
-
+test_D
+test_Boundary
+test_quadrature

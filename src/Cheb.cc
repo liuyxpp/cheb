@@ -2,7 +2,12 @@
 #include "Boundary.h"
 #include "armadillo"
 
+#include <iostream>
+using namespace std;
+
 using namespace arma;
+
+const double PI=3.14159265358979323846264338327950288;
 
 /**
  * Generate a set of Chebyshev-Gauss-Lobatto nodes.
@@ -38,7 +43,7 @@ colvec Cheb::c(){
  */
 mat Cheb::D(){
     colvec cc = c();
-    for(int i=1; i<=N; i+=2){
+    for(uword i=1; i<=N; i+=2){
         cc(i) = -cc(i);
     }
 
@@ -98,6 +103,52 @@ mat Cheb::D2(Boundary lb, Boundary rb){
         // can be either RBC or NBC for each boundary
         return D2_rbc_rbc(lb, rb);
 }
+
+/**
+ * Compute the (N+1) weights for Clenshaw-Curtis quadrature
+ * on the interval [-1, 1].
+ * Using FFT algorithm, the weights are computed in linear time.
+ */
+colvec Cheb::clencurt_weights_fft(){
+    colvec c = zeros<colvec>(N+1);
+    // N even: c(0), c(2), ..., c(N)
+    // N odd:  c(0), c(2), ..., c(N-1)
+    for(uword i=0; i<N+1; i+=2){
+        c(i) = 2.0 / (1.0 - i*i);
+    }
+    colvec cc = join_vert(c, flipud(c.subvec(1, N-1)));
+
+    colvec v = real(ifft(cc*cx_double(1, 0)));
+
+    colvec w = 2.0 * v.subvec(0, N);
+    w(0) *= 0.5;
+    w(N) *= 0.5;
+
+    return w;
+}
+
+/**
+ * Compute Clenshaw-Curtis quadrature.
+ * Avoid recomputing Clenshaw-Curtis weights by storing them.
+ */
+double Cheb::quadrature_clencurt(colvec f){
+    if(clencurt_weights.is_empty()){
+        clencurt_weights.set_size(N+1);
+        clencurt_weights = clencurt_weights_fft();
+    }
+
+    return quadrature_clencurt(f, clencurt_weights);
+}
+
+double Cheb::quadrature_clencurt(colvec f, colvec w){
+    return dot(w, f);
+}
+
+/***************************************************************************
+ *
+ *  Private Member Functions
+ *
+ ***************************************************************************/
 
 /**
  * Generate 1st order Chebyshev differentiation matrix

@@ -14,15 +14,19 @@ See test codes in the tests directory.
 ^^^^^^^^^^
 
 # cd cheb++
+
 Go to the top directory of cheb++.
 
 # make lib
+
 To make libcheb.a
 
 # cp build/lib/libcheb.a target_dir
+
 Copy libcheb.a to target directory (target_dir)
 
 For Mac OS x86_64:
+
 Add "-framework Accelerate" to CXXFLAGS in the Makefile.
 
 Dependency

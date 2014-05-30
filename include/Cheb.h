@@ -31,8 +31,6 @@
 #include "armadillo"
 #include "Boundary.h"
 
-const double PI=3.14159265358979323846264338327950288;
-
 /**
  * The index of the Chebyshev-Gauss-Lobatto nodes is
  *          0, 1, 2, ..., N
@@ -40,7 +38,7 @@ const double PI=3.14159265358979323846264338327950288;
  */
 class Cheb{
 public:
-    Cheb(int num_nodes): N(num_nodes-1){}
+    Cheb(arma::uword num_nodes): N(num_nodes-1){}
     int size() {return N+1;}
     arma::colvec x();  // Chebyshev-Gauss-Lobatto nodes
     arma::colvec w();  // Chebyshev-Gauss-Lobatto weights
@@ -49,8 +47,13 @@ public:
     arma::mat D2();   // 2nd order Chebyshev differential matrix
     arma::mat D(Boundary, Boundary);  // subject to boundary condition
     arma::mat D2(Boundary, Boundary);  // subject to boundary condition
+    arma::colvec clencurt_weights_fft();
+    double quadrature_clencurt(arma::colvec f);
+    double quadrature_clencurt(arma::colvec f, arma::colvec w);
 private:
-    int N;
+    arma::uword N;
+    // computed when first calling quadrature_clencurt().
+    arma::colvec clencurt_weights;
 
     arma::mat D_dbc_dbc();
     arma::mat D_dbc_rbc(Boundary);

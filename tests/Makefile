@@ -20,7 +20,7 @@ OPT = -O2
 HEADERS = -I../include
 CXXFLAGS = $(BENCHMARK) $(WARN) $(ARMAFINAL) $(OPT) $(HEADERS)
 
-all: test_D test_Boundary
+all: test_D test_Boundary test_quadrature
 
 test_D: test_D.cc
 	$(CXX) $(CXXFLAGS) -o $@ $< $(LIB_FLAGS)
@@ -28,6 +28,9 @@ test_D: test_D.cc
 test_Boundary: test_Boundary.cc
 	$(CXX) $(CXXFLAGS) -o $@ $< $(LIB_FLAGS)
 
+test_quadrature: test_quadrature.cc
+	$(CXX) $(CXXFLAGS) -o $@ $< $(LIB_FLAGS)
+
 .PHONY: clean
 clean:
-	rm -f test_D test_Boundary
+	rm -f test_D test_Boundary test_quadrature
