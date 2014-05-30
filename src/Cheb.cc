@@ -29,7 +29,7 @@ colvec Cheb::w(){
 }
 
 /**
- * Generate a set of Chebyshev coefficients.
+ * Generate a set of Chebyshev coefficients. Often denoted as $\gamma_n$.
  */
 colvec Cheb::c(){
     colvec cc(N+1, fill::ones);
@@ -39,13 +39,71 @@ colvec Cheb::c(){
 }
 
 /**
+ * Generate a set of Barycentric weights for Chebyshev-Gauss-Lobatto grid.
+ * The weigts are
+ *      w_j = (-1)^j * d_j, with
+ *      d_j = 1/2,  j=0 or j=N
+ *      d_j = 1,    j = 1, 2, ..., N-1
+ */
+colvec Cheb::barycentric_weights(){
+    colvec ww = ones<colvec>(N+1);
+    for(uword i=0; i<=N; i+=2)
+        ww(i) *= -1;
+    ww(0) *= 0.5;
+    ww(N) *= 0.5;
+    return ww;
+}
+
+/**
+ * Compute matrix T_{kj} for interpolation between two sets of points.
+ * y is a colvec which contains a set of locations to be interpolated.
+ * y should be in the range of [-1, 1]
+ * k is the index of colvec y.
+ * j is the index of colvec x.
+ * The size of T is M x (N+1), where M = size(y).
+ */
+ mat Cheb::barycentric_matrix(const colvec &y){
+    uword M = y.n_elem;
+    colvec xx = x();
+    colvec ww = barycentric_weights();
+    mat T = zeros<mat>(M, N+1);
+    bool row_has_match;
+
+    for(uword k=0; k<M; k++){
+        row_has_match = false;
+        for(uword j=0; j<=N; j++){
+            double yt = y(k);
+            double xt = xx(j);
+            if(yt == xt || abs(yt-xt) < abs(min(yt, xt))*datum::eps){
+                row_has_match = true;
+                T(k, j) = 1.0;
+                continue;
+            }
+        }
+        if(!row_has_match){
+            colvec t = ww / (y(k) - xx);
+            T.row(k) = t.t() / sum(t);
+        }
+    }
+
+    return T;
+ }
+
+ /**
+  * Interpolate f on the set of locations y.
+  */
+colvec Cheb::interpolate(const colvec &y, const colvec &f){
+    mat T = barycentric_matrix(y);
+    return T * f;
+}
+
+/**
  * Generate 1st order Chebyshev differentiation matrix.
  */
 mat Cheb::D(){
     colvec cc = c();
-    for(uword i=1; i<=N; i+=2){
+    for(uword i=1; i<=N; i+=2)
         cc(i) = -cc(i);
-    }
 
     colvec xx = x();
     mat X = repmat(xx, 1, N+1);
@@ -131,7 +189,7 @@ colvec Cheb::clencurt_weights_fft(){
  * Compute Clenshaw-Curtis quadrature.
  * Avoid recomputing Clenshaw-Curtis weights by storing them.
  */
-double Cheb::quadrature_clencurt(colvec f){
+double Cheb::quadrature_clencurt(const colvec &f){
     if(clencurt_weights.is_empty()){
         clencurt_weights.set_size(N+1);
         clencurt_weights = clencurt_weights_fft();
@@ -140,7 +198,7 @@ double Cheb::quadrature_clencurt(colvec f){
     return quadrature_clencurt(f, clencurt_weights);
 }
 
-double Cheb::quadrature_clencurt(colvec f, colvec w){
+double Cheb::quadrature_clencurt(const colvec &f, const colvec &w){
     return dot(w, f);
 }
 

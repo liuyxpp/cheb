@@ -18,3 +18,4 @@ done.txt
 test_D
 test_Boundary
 test_quadrature
+test_interpolation

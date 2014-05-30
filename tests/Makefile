@@ -5,7 +5,9 @@ ifeq ($(MACOS), macos)
 	EXTRA_LIB_FLAGS = -framework Accelerate
 endif
 
-LIB_FLAGS = ~/Develop/cheb++/build/lib/libcheb.a -larmadillo $(EXTRA_LIB_FLAGS)
+LIBCHEB = ~/Develop/cheb++/build/lib/libcheb.a
+
+LIB_FLAGS = $(LIBCHEB) -larmadillo -lmx -lmex -lmat $(EXTRA_LIB_FLAGS)
 
 OPT = -O2
 
@@ -20,7 +22,7 @@ OPT = -O2
 HEADERS = -I../include
 CXXFLAGS = $(BENCHMARK) $(WARN) $(ARMAFINAL) $(OPT) $(HEADERS)
 
-all: test_D test_Boundary test_quadrature
+all: test_D test_Boundary test_quadrature test_interpolation
 
 test_D: test_D.cc
 	$(CXX) $(CXXFLAGS) -o $@ $< $(LIB_FLAGS)
@@ -31,6 +33,9 @@ test_Boundary: test_Boundary.cc
 test_quadrature: test_quadrature.cc
 	$(CXX) $(CXXFLAGS) -o $@ $< $(LIB_FLAGS)
 
+test_interpolation: test_interpolation.cc
+	$(CXX) $(CXXFLAGS) -o $@ $< $(LIB_FLAGS)
+
 .PHONY: clean
 clean:
-	rm -f test_D test_Boundary test_quadrature
+	rm -f test_D test_Boundary test_quadrature test_interpolation

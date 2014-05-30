@@ -48,8 +48,12 @@ public:
     arma::mat D(Boundary, Boundary);  // subject to boundary condition
     arma::mat D2(Boundary, Boundary);  // subject to boundary condition
     arma::colvec clencurt_weights_fft();
-    double quadrature_clencurt(arma::colvec f);
-    double quadrature_clencurt(arma::colvec f, arma::colvec w);
+    double quadrature_clencurt(const arma::colvec &f);
+    double quadrature_clencurt(const arma::colvec &f, const arma::colvec &w);
+    arma::colvec barycentric_weights();
+    arma::mat barycentric_matrix(const arma::colvec &y);
+    arma::colvec interpolate(const arma::colvec &y, const arma::colvec &f);
+
 private:
     arma::uword N;
     // computed when first calling quadrature_clencurt().
