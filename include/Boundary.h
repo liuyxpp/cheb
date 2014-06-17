@@ -37,6 +37,9 @@ public:
     Boundary(): bc(BC::PBC), a1(0), a2(0), a3(0) {}
     Boundary(const Boundary &rhs): bc(rhs.bc), a1(rhs.a1), a2(rhs.a2), a3(rhs.a3) {}
     Boundary(const double, const double, const double);
+
+    Boundary& operator=(const Boundary &rhs);
+
     BC kind() {return bc;}
     double alpha() {return a1;}
     double beta() {return a2;}

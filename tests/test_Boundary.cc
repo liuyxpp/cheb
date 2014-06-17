@@ -35,5 +35,12 @@ int main(){
         cout<<"Copy constructor OK!"<<endl;
     cout<<bc6.alpha()<<bc6.beta()<<bc6.gamma()<<endl;
 
+    // Asignment
+    Boundary bc7;
+    bc7 = bc3;
+    if(bc7.kind() == BC::RBC)
+        cout<<"Asignment OK!"<<endl;
+    cout<<bc7.alpha()<<bc7.beta()<<bc7.gamma()<<endl;
+
     return 0;
 }
