@@ -7,7 +7,7 @@ endif
 
 LIBCHEB = ~/Develop/cheb++/build/lib/libcheb.a
 
-LIB_FLAGS = $(LIBCHEB) -larmadillo -lmx -lmex -lmat $(EXTRA_LIB_FLAGS)
+LIB_FLAGS = $(LIBCHEB) -larmadillo -lm -lmatio $(EXTRA_LIB_FLAGS)
 
 OPT = -O2
 

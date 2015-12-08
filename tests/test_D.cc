@@ -6,7 +6,7 @@ using namespace std;
 using namespace arma;
 
 int main(){
-    int N = 3;
+    int N = 2;
 
     Cheb cheb(N+1);
     colvec x = cheb.x();
@@ -19,6 +19,13 @@ int main(){
     D.print("D:");
     mat D2 = cheb.D2();
     D2.print("D2:");
+
+    // NBC-NBC
+    Boundary nbc = Boundary(1, 0, 0); // NBC
+    mat Dnbc = cheb.D(nbc, nbc);
+    Dnbc.print("D with homo NBC:");
+    mat D2nbc = cheb.D2(nbc, nbc);
+    D2nbc.print("D2 with homo NBC:");
 
     // DBC-DBC
     Boundary dbc = Boundary(); // default: DBC
@@ -33,13 +40,6 @@ int main(){
     Drbc.print("D with homo RBC:");
     mat D2rbc = cheb.D2(rbc, rbc);
     D2rbc.print("D2 with homo RBC:");
-
-    // NBC-NBC
-    Boundary nbc = Boundary(1, 0, 0); // NBC
-    mat Dnbc = cheb.D(nbc, nbc);
-    Dnbc.print("D with homo NBC:");
-    mat D2nbc = cheb.D2(nbc, nbc);
-    D2nbc.print("D2 with homo NBC:");
 
     // DBC-RBC
     mat Ddr = cheb.D(dbc, rbc);
