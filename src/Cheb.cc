@@ -129,6 +129,7 @@ mat Cheb::D2(){
 /**
  * Generate 1st order Chebyshev differentiation matrix
  * subject to boundary condition.
+ * Note that this method requires N >= 2, i.e. at least 3 Chebyshev points.
  */
 mat Cheb::D(Boundary lb, Boundary rb){
     BC lbc = lb.kind();
@@ -147,6 +148,7 @@ mat Cheb::D(Boundary lb, Boundary rb){
 /**
  * Generate 2nd order Chebyshev differentiation matrix
  * subject to boundary condition.
+ * Note that this method requires N >= 2, i.e. at least 3 Chebyshev points.
  */
 mat Cheb::D2(Boundary lb, Boundary rb){
     BC lbc = lb.kind();
