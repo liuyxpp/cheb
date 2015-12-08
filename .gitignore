@@ -1,0 +1,5 @@
+build/*
+tests/test_Boundary
+tests/test_D
+tests/test_interpolation
+tests/test_quadrature
