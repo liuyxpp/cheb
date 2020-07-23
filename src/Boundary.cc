@@ -24,9 +24,12 @@ Boundary::Boundary(const double k1, const double k2, const double k3){
 }
 
 Boundary& Boundary::operator=(const Boundary &rhs){
-    bc = rhs.bc;
-    a1 = rhs.a1;
-    a2 = rhs.a2;
-    a3 = rhs.a3;
+    if (this != &rhs){
+        bc = rhs.bc;
+        a1 = rhs.a1;
+        a2 = rhs.a2;
+        a3 = rhs.a3;
+    }
+    return *this;
 }
 

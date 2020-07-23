@@ -5,9 +5,9 @@ ifeq ($(MACOS), macos)
 	EXTRA_LIB_FLAGS = -framework Accelerate
 endif
 
-LIBCHEB = ~/Develop/cheb++/build/lib/libcheb.a
+LIBCHEB = ~/SynologyDrive/Develop/cheb++/build/lib/libcheb.a
 
-LIB_FLAGS = $(LIBCHEB) -larmadillo -lm -lmatio $(EXTRA_LIB_FLAGS)
+LIB_FLAGS = $(LIBCHEB) -lm -lmatio $(EXTRA_LIB_FLAGS)
 
 OPT = -O2
 
@@ -19,7 +19,7 @@ OPT = -O2
 #BENCHMARK = -pg
 ## Uncomment the above line to enable bechmark mode.
 
-HEADERS = -I../include
+HEADERS = -I../include -I/Users/lyx/SynologyDrive/Develop/others/armadillo-9.900.2/include
 CXXFLAGS = $(BENCHMARK) $(WARN) $(ARMAFINAL) $(OPT) $(HEADERS)
 
 all: test_D test_Boundary test_quadrature test_interpolation
